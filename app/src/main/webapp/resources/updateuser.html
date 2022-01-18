@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>User Form</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        *{ margin: 0; padding: 0; box-sizing: border-box; font-family: 'Merienda', cursive}
+
+        .gender{
+            padding: 6px 12px;
+        }
+
+        .btn{
+            color: #fff !important;
+            background-color:cyan;
+            border: none;
+            border-radius: 0%;
+        }
+
+        .btn:hover{
+            color:cyan !important;
+            background-color:#fff;
+            border:none;
+            border-radius: 0%;
+        }
+    </style>
+    <script>   
+        $(document).ready(function()
+        {
+            var val = new URLSearchParams(window.location.search);
+            $('#id').attr('value',val);
+        });
+        
+    </script>
+</head>
+<body>
+    <div class="container">
+        <form id="contact_form" class="well form-horizontal" onsubmit="event.preventDefault()" method="POST">
+            <fieldset>
+                <legend>
+                    <h1 style="text-align:center">
+                        <b>User Form</b>
+                    </h1>
+                </legend>              
+                <div class="form-group">
+                    <label class="col-md-5 control-label">ID</label>
+                    <div class="col-md-4 inputGroupContainer">
+                        <div class="input-group">
+                            <input class="form-control" name="id" id="id" type="text" >
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-5 control-label">Full Name</label>
+                    <div class="col-md-4 inputGroupContainer">
+                        <div class="input-group">
+                            <input class="form-control" name="name" id="name" placeholder="Full Name" type="text" min="4" max="30" autocomplete="off">
+                        </div>
+                        <h5 id="user_name" style="color: red"></h5>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-5 control-label">Age</label>
+                    <div class="col-md-4 inputGroupContainer">
+                        <div class="input-group">
+                            <input class="form-control" name="age" id="age" placeholder="Age" type="number" autocomplete="off">
+                        </div>
+                        <h5 id="user_age" style="color: red"></h5>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-5 control-label">Gender</label>
+                    <div class="col-md-4 inputGroupContainer">
+                        <div class="input-group">
+                            <select class="gender" name="gender" id="gender" autocomplete="off" required>
+                                <option value="none">Select One</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-5 control-label">Date of Birth</label>
+                    <div class="col-md-4 inputGroupContainer">
+                        <div class="input-group">
+                            <input class="form-control" name="dob" id="dob" placeholder="DOB" type="date" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-5 control-label">Mobile Number</label>
+                    <div class="col-md-4 inputGroupContainer">
+                        <div class="input-group">
+                            <input class="form-control" name="mobile" id="mobile" placeholder="+91" type="text" size="12" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-5 control-label">E-Mail</label>
+                    <div class="col-md-4 inputGroupContainer">
+                        <div class="input-group">
+                            <input class="form-control" name="email" id="email" placeholder="E-Mail Address" type="email" autocomplete="off">
+                        </div>
+                        <h5 id="user_email" style="color: red"></h5>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-5 control-label">Password</label>
+                    <div class="col-md-4 inputGroupContainer">
+                        <div class="input-group">
+                            <input class="form-control" name="password" id="password" placeholder="Password" type="password" maxlength="14" autocomplete="off">
+                        </div>
+                        <h5 id="user_pass" style="color: red"></h5>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-5 control-label">Confirm Password</label>
+                    <div class="col-md-4 inputGroupContainer">
+                        <div class="input-group">
+                            <input class="form-control" name="cpassword" id="cpassword" placeholder="Confirm Password" type="password" maxlength="14" autocomplete="off">
+                        </div>
+                        <h5 id="user_cpass" style="color: red"></h5>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-4 control-label"></label>
+                    <div class="col-md-4">
+                        <br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                        <!-- <a href="/adduser"> -->
+                            <button class="btn" id="submit" type="submit">
+                                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspSUBMIT&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                            </button>
+                        <!-- </a> -->
+                        <h5 id="success_message" style="color: rgb(30, 255, 0);text-align: center"></h5>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>    
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+    <script>        
+        $(document).ready(function()
+        {           
+            $('#user_name').hide();
+            $('#user_age').hide();
+            $('#user_email').hide();
+            $('#user_pass').hide();
+
+            var u_name = true;
+            var u_age = true;
+            var u_email = true;
+            var u_cpass = true;
+
+            $('#name').keyup(function()
+            {
+                uname_alpha_check();
+            });
+
+            $('#name').click(function()
+            {
+                uname_check();
+            });
+
+            function uname_check()
+            {
+                var u_val = $('#name').val();
+
+                if(u_val.length == '' )
+                {
+                    $('#user_name').show();
+                    $('#user_name').html("Please fill your Full Name");
+                    $('#user_name').focus();
+                    u_name = false;
+                    return false;
+                }
+                else{
+                    $('#user_name').hide();
+                }
+            }
+
+            function uname_alpha_check()
+            {
+                var u_val = $('#name').val();
+                var pat = /^[A-Za-z]*$/ ;
+
+                if( !pat.test(u_val) && u_val !== '')
+                {
+                    $('#user_name').show();
+                    $('#user_name').html("Name should not be alphanumeric");
+                    $('#user_name').focus();
+                    u_name = false;
+                    return false;
+                }
+                else{
+                    $('#user_name').hide();
+                }
+
+                var u_val = $('#name').val();
+
+                if(u_val.length == '' )
+                {
+                    $('#user_name').show();
+                    $('#user_name').html("Please fill your Full Name");
+                    $('#user_name').focus();
+                    u_name = false;
+                    return false;
+                }
+                else{
+                    $('#user_name').hide();
+                }
+            }
+
+            $('#age').keyup(function()
+            {
+                uage_check();
+            });
+
+            $('#age').click(function()
+            {
+                uage_enter();
+            });
+
+            function uage_enter()
+            {
+                var u_val = $('#age').val();
+
+                if( u_val.length == '' )
+                {
+                    $('#user_age').show();
+                    $('#user_age').html('Enter your Age');
+                    $('#user_age').focus();
+                    u_age = false;
+                    return false;
+                }
+                else{
+                    $('#user_age').hide();
+                }
+            }
+
+            function uage_check()
+            {
+                var u_val = $('#age').val();
+
+                if( u_val.length == '' )
+                {
+                    $('#user_age').show();
+                    $('#user_age').html('Enter your Age');
+                    $('#user_age').focus();
+                    u_age = false;
+                    return false;
+                }
+                else{
+                    $('#user_age').hide();
+                }
+
+                if( u_val < 12 || u_val > 100 )
+                {
+                    $('#user_age').show();
+                    $('#user_age').html('Invalid Age');
+                    $('#user_age').focus();
+                    u_age = false;
+                    return false;
+                }
+                else{
+                    $('#user_age').hide();
+                }
+            }
+
+            $('#email').keyup(function()
+            {
+                uemail_check();
+            });
+
+            $('#email').click(function()
+            {
+                uemail_check();
+            });
+
+            function uemail_check()
+            {
+                var u_val = $('#email').val();
+
+                if( u_val == '' )
+                {
+                    $('#user_email').show();
+                    $('#user_email').html("Please enter your email address")
+                    $('#user_email').focus();
+                    u_email = false;
+                    return false;
+                }
+                else{
+                    $('#user_email').hide();
+                }
+            }
+
+            $('#cpassword').keyup(function()
+            {
+                ucpass_check();
+            });
+
+            function ucpass_check()
+            {
+                var u_val = $('#password').val();
+                var u_cval = $('#cpassword').val();
+                if( (u_val !== u_cval ) )
+                {
+                    $('#user_cpass').show();
+                    $('#user_cpass').html("Password doesn't match");
+                    $('#user_cpass').focus();
+                    u_cpass = false;
+                    return false;
+                }
+                else{
+                    $('#user_cpass').hide();
+                }
+            }
+               
+            $('#submit').click(function()
+            {
+                var fdata = {
+                id: $('#id').val(),
+                name: $('#name').val(),
+                age: $('#age').val(),
+                gender: $('#gender').val(),
+                dob: $('#dob').val(),
+                mobile: $('#mobile').val(),
+                email: $('#email').val(),
+                password: $('#password').val(),
+                cpassword: $('#cpassword').val(),
+                };
+                
+                if( check_all() == true )
+                {
+                    $.ajax({
+                        type: "PATCH",
+                        url: "http://localhost:8000/updateuser",
+                        data: JSON.stringify(fdata),
+                        contentType: "application/json",
+                        dataType: "text",                        
+                        success: function(data){
+                            console.log("OK");
+                            $('#success_message').show();
+                            $('#success_message').html('User Updated Successfully');
+                            $('#success_message').focus();                             
+                        },
+                        error: function(error){
+                            console.log("FAIL");
+                            $('#success_message').show();
+                            $('#success_message').html('User not Updated');
+                            $('#success_message').focus();                        
+                        }
+                    });
+                }
+            });
+
+            function check_all()
+            {
+                u_name = true;
+                u_age = true;
+                u_email = true;
+                u_cpass = true;
+
+                uname_check();
+                uname_alpha_check();
+                uage_check();
+                uage_enter();
+                uage_check()
+                uemail_check();
+                ucpass_check();
+
+                if( ( u_name == true ) && ( u_age == true ) && ( u_email == true ) && ( u_cpass == true ))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }                
+            }
+        });
+    </script>
+</body>
+</html>

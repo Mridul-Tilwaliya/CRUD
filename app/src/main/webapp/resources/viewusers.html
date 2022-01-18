@@ -1,0 +1,340 @@
+<!-- <!DOCTYPE html> -->
+<html lang="en">
+<head>
+    <title>View User</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@700&display=swap" rel="stylesheet">  
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">  
+    <style>
+      *{ margin: 0; padding: 0; box-sizing: border-box; font-family: 'Merienda', cursive}    
+
+      body {
+        margin-left: 3%;
+        margin-right: 3%;
+      }
+
+      thead {
+        font-size: large;
+        font-weight: bolder;
+        background-color: rgb(3, 44, 9);
+        color:cornsilk;
+        text-align: center;
+      }
+
+      th {
+        text-align: center;
+      }
+
+      table {
+        border-collapse: collapse !important;
+      }
+
+      tr {
+        text-align: center;
+      }
+
+      .id{
+        width: 4%;
+      }
+
+      .age{
+        width: 5%;
+        text-align: center;
+      }
+
+      .gender{
+        width: 7%;
+        text-align: center;
+      }
+
+      .dob{
+        width: 12%;
+      }
+
+      .email{
+        width: 24%;
+        text-align: center;
+      }
+
+      .action{
+        width: 21%;
+        text-align: center;
+      }
+      
+      .btn{
+        color: #fff !important;
+        background-color:#3cff00;
+        border: none;
+        border-radius: 0%;
+        display: inline-block;
+      }
+
+      .btn:hover{
+        color:rgb(3, 44, 9) !important;
+        background-color:cornsilk;
+        border:none;
+        border-radius: 0%;
+        display: inline-block;
+      }
+
+      .upd{
+        color: #fff !important;
+        background-color: orange;
+        border: none;
+        border-radius: 0%;
+        display: inline-block;
+      }
+
+      .upd:hover{
+        color:orange !important;
+        background-color:cornsilk;
+        border:none;
+        border-radius: 0%;
+        display: inline-block;
+      }
+
+      .del{
+        color: #fff !important;
+        background-color:cyan;
+        border: none;
+        border-radius: 0%;
+        display: inline-block;
+      }
+
+      .del:hover{
+        color: cyan !important;
+        background-color:cornsilk;
+        border:none;
+        border-radius: 0%;
+        display: inline-block;
+      }
+    </style>
+</head>
+  <body>
+    <div class="container">     
+      <h1 style="text-align:center">                
+        <b>User List</b>
+        <br>
+      </h1>
+    </div>
+    <br>
+    <!-- <div class="container"> -->
+      <table class="table table-bordered table-striped">
+        <thead class="thead-inverse">
+          <tr>
+            <th class="id">ID</th>
+            <th class="name">Name</th>
+            <th class="age">Age</th>
+            <th class="gender">Gender</th>
+            <th class="dob">Date of Birth</th>
+            <th class="mobile">Mobile</th>
+            <th class="email">Email ID</th>
+            <th class="action">Action</th>
+          </tr>
+        </thead>
+        <tbody id="bdy">
+                 
+        </tbody>
+      </table> 
+      <form onsubmit="event.preventDefault()" method="GET">      
+        <div class="row">          
+          <!-- <div class="col-md-4">
+            <input class="form-control" name="name" id="name" placeholder="Full Name" type="text" min="4" max="30" autocomplete="off">
+          </div> -->
+          <div class="col-md-4">
+              <!-- <button class="btn" id="show" type="submit">
+                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspShow&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+              </button> -->
+              <button class="btn" id="showall" type="submit">
+                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspShow All Users&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+              </button>              
+          </div>
+          <div class="col-md-4">
+            <h4 id="success_message" style="color: rgb(30, 255, 0);text-align: center;"></h4>
+          </div>
+        </div>
+      <!-- </div> -->
+    </form>     
+    </div> 
+    <!-- <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>   
+      function deleteUser(id)
+      {
+        // alert("Are you sure you want to delete");
+        $.ajax({
+          type: "DELETE",
+          url: "http://localhost:8000/delete/" + id,
+          contentType: "application/json",
+          dataType: "text",                        
+          success: function (data){
+              console.log("success");
+              $('#success_message').show();
+              $('#success_message').html('User Deleted Successfully');
+              $('#success_message').focus();    
+              getAll();                                 
+          },
+          error: function(error){
+            console.log("error"); 
+              $('#success_message').show();
+              $('#success_message').html('User not Deleted');
+              $('#success_message').focus();                
+          }
+        });
+      }
+
+      function updateUser(id)
+      {
+        window.location.href = '/resources/updateuser.html?id' + id;
+      }
+
+      function getAll()
+        {
+          $.ajax({
+            type: "GET",
+            url: "http://localhost:8000/showusers",
+            contentType: "application/json",
+            dataType: "text",                        
+            success: function (data){
+                const newData = JSON.parse(data);
+                var tdata = '';
+                // $.each(newData, function(value)
+                // {     console.log("each");               
+                //   tdata += "<tr>";
+                //     tdata += "<td>"+ value.id +"</td>";
+                //     tdata += "<td>"+ value.name +"</td>";
+                //     tdata += "<td>"+ value.age +"</td>";
+                //     tdata += "<td>"+ value.gender +"</td>";
+                //     tdata += "<td>"+ value.dob +"</td>";
+                //     tdata += "<td>"+ value.mobile +"</td>";
+                //     tdata += "<td>"+ value.email +"</td>";
+                //     tdata += "<td>";
+                //       tdata += "<button class='btn upd'>&nbsp&nbsp&nbspUpdate&nbsp&nbsp&nbsp</button>&nbsp&nbsp&nbsp&nbsp&nbsp";
+                //       tdata += "<button class='btn del' onclick='deleteUser();'>&nbsp&nbsp&nbspDelete&nbsp&nbsp&nbsp</button>";
+                //     tdata += "</td>";
+                //   tdata += "</tr>" ; 
+
+                //   function deleteUser()
+                //   {
+                //     prompt("Delete");
+                //     alert("Del");
+                //     console.log("ok");
+                //   }
+                // });
+
+                newData.forEach(function(value)
+                {     
+                  tdata += "<tr>";
+                    tdata += "<td>"+ value.id +"</td>";
+                    tdata += "<td>"+ value.name +"</td>";
+                    tdata += "<td>"+ value.age +"</td>";
+                    tdata += "<td>"+ value.gender +"</td>";
+                    tdata += "<td>"+ value.dob +"</td>";
+                    tdata += "<td>"+ value.mobile +"</td>";
+                    tdata += "<td>"+ value.email +"</td>";
+                    tdata += "<td>";
+                      tdata += "<button class='btn upd' onclick='updateUser("+value.id+")'>&nbsp&nbsp&nbspUpdate&nbsp&nbsp&nbsp</button>&nbsp&nbsp&nbsp&nbsp&nbsp";
+                      tdata += "<button class='btn del' onclick='deleteUser("+value.id+")'>&nbsp&nbsp&nbspDelete&nbsp&nbsp&nbsp</button>";
+                    tdata += "</td>";
+                  tdata += "</tr>" ;  
+                });
+                // $('.del').on("click",deleteUser());
+                
+                $('#bdy').html(tdata);
+            },
+            error: function() {
+                console.log("error");                     
+            }
+          });         
+        } 
+
+      $(document).ready(function()
+      {
+        // $('#show').click(function()
+        // {
+        //   $.ajax({
+        //       type: "GET",
+        //       url: "http://localhost:8000/showuserbyname/"  + $('#name').val(),
+        //       contentType: "application/json",
+        //       dataType: "text",                        
+        //       success: function (data){
+        //           console.log("success");
+        //       },
+        //       error: function() {
+        //           console.log("error");                     
+        //       }
+        //     });
+        // });            
+        
+        function getAll()
+        {
+          $.ajax({
+            type: "GET",
+            url: "http://localhost:8000/showusers",
+            contentType: "application/json",
+            dataType: "text",                        
+            success: function (data){
+                const newData = JSON.parse(data);
+                var tdata = '';
+                // $.each(newData, function(value)
+                // {     console.log("each");               
+                //   tdata += "<tr>";
+                //     tdata += "<td>"+ value.id +"</td>";
+                //     tdata += "<td>"+ value.name +"</td>";
+                //     tdata += "<td>"+ value.age +"</td>";
+                //     tdata += "<td>"+ value.gender +"</td>";
+                //     tdata += "<td>"+ value.dob +"</td>";
+                //     tdata += "<td>"+ value.mobile +"</td>";
+                //     tdata += "<td>"+ value.email +"</td>";
+                //     tdata += "<td>";
+                //       tdata += "<button class='btn upd'>&nbsp&nbsp&nbspUpdate&nbsp&nbsp&nbsp</button>&nbsp&nbsp&nbsp&nbsp&nbsp";
+                //       tdata += "<button class='btn del' onclick='deleteUser();'>&nbsp&nbsp&nbspDelete&nbsp&nbsp&nbsp</button>";
+                //     tdata += "</td>";
+                //   tdata += "</tr>" ; 
+
+                //   function deleteUser()
+                //   {
+                //     prompt("Delete");
+                //     alert("Del");
+                //     console.log("ok");
+                //   }
+                // });
+
+                newData.forEach(function(value)
+                {     
+                  tdata += "<tr>";
+                    tdata += "<td>"+ value.id +"</td>";
+                    tdata += "<td>"+ value.name +"</td>";
+                    tdata += "<td>"+ value.age +"</td>";
+                    tdata += "<td>"+ value.gender +"</td>";
+                    tdata += "<td>"+ value.dob +"</td>";
+                    tdata += "<td>"+ value.mobile +"</td>";
+                    tdata += "<td>"+ value.email +"</td>";
+                    tdata += "<td>";
+                      tdata += "<button class='btn upd' onclick='updateUser("+value.id+")'>&nbsp&nbsp&nbspUpdate&nbsp&nbsp&nbsp</button>&nbsp&nbsp&nbsp&nbsp&nbsp";
+                      tdata += "<button class='btn del' onclick='deleteUser("+value.id+")'>&nbsp&nbsp&nbspDelete&nbsp&nbsp&nbsp</button>";
+                    tdata += "</td>";
+                  tdata += "</tr>" ;  
+                });
+                // $('.del').on("click",deleteUser());
+                
+                $('#bdy').html(tdata);
+            },
+            error: function() {
+                console.log("error");                     
+            }
+          });         
+        }        
+
+        $('#showall').click(function()
+        {        
+          getAll();
+        });
+      });  
+    </script>    
+  </body>
+</html>

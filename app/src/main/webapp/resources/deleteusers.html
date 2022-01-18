@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Delete User</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@700&display=swap" rel="stylesheet">  
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">  
+    <style>
+      *{ margin: 0; padding: 0; box-sizing: border-box; font-family: 'Merienda', cursive}    
+
+      body {
+        margin-left: 3%;
+        margin-right: 3%;
+      }
+
+      thead {
+        font-size: large;
+        font-weight: bolder;
+        background-color: rgb(3, 44, 9);
+        color:cornsilk;
+      }
+
+      table {
+        border-collapse: collapse !important;
+      }
+
+      .age{
+        width: 5%;
+      }
+
+      .gender{
+        width: 10%;
+      }
+
+      .dob{
+        width: 15%;
+      }
+
+      .email{
+        width: 30%;
+      }
+
+      .btn{
+            color: #fff !important;
+            background-color:#3cff00;
+            border: none;
+            border-radius: 0%;
+            display: inline-block;
+        }
+
+      .btn:hover{
+          color:rgb(3, 44, 9) !important;
+          background-color:cornsilk;
+          border:none;
+          border-radius: 0%;
+          display: inline-block;
+      }
+
+      .us{
+        justify-content:right;
+      }
+
+      button {
+        justify-content: left !important;
+      }
+
+      .bt{
+        justify-content: center;
+      }
+
+      .btm{
+        display:inline-block;
+      }    
+    </style>
+</head>
+  <body>
+    <div class="container"> 
+      <br>           
+      <h1 style="text-align:center">
+        <b>User List</b>
+      </h1>   
+    </div>
+    <br>
+    <!-- <div class="container"> -->
+      <table class="table table-bordered table-striped">
+        <thead class="thead-inverse">
+          <tr>
+            <th class="id">ID</th>
+            <th class="name">Name</th>
+            <th class="age">Age</th>
+            <th class="gender">Gender</th>
+            <th class="dob">Date of Birth</th>
+            <th class="mobile">Mobile</th>
+            <th class="email">Email ID</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="u : ${ulist}">
+            <td th:text="${u.name}"></td>
+            <td th:text="${u.age}"></td>
+            <td th:text="${u.gender}"></td>
+            <td th:text="${u.dob}"></td>
+            <td th:text="${u.mobile}"></td>
+            <td th:text="${u.email}"></td>
+          </tr>          
+        </tbody>
+      </table> 
+      <br>  
+      <form onsubmit="event.preventDefault()" method="DELETE">      
+        <div class="row">          
+          <div class="col-md-4">
+            <input class="form-control" name="name" id="name" placeholder="Full Name" type="text" min="4" max="30" autocomplete="off">
+          </div>
+          <div class="col-md-4">
+              <button class="btn control-label" id="submit" type="submit">
+                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspDelete&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+              </button>
+              <br><br>
+              <h5 id="success_message" style="color: rgb(30, 255, 0);text-align: center"></h5>
+          </div>
+      <!-- </div> -->
+    </form>     
+    </div>  
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function()
+      {
+        $('#submit').click(function()
+        {
+          $.ajax({
+              type: "DELETE",
+              url: "http://localhost:8000/delete/" + $('#name').val(),
+              contentType: "application/json",
+              dataType: "text",                        
+              success: function (data){
+                  console.log("success");
+                  $('#success_message').show();
+                  $('#success_message').html('User Deleted Successfully');
+                  $('#success_message').focus(); 
+              },
+              error: function() {
+                console.log("error"); 
+                  $('#success_message').show();
+                  $('#success_message').html('User not Deleted');
+                  $('#success_message').focus();                        
+              }
+            });
+        });
+      });        
+    </script>
+  </body>
+</html>
